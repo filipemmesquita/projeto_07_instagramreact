@@ -14,7 +14,21 @@ export default function Posts(){
     </div>
     );
 }
+
 function Post(props){
+  
+    const [isLiked, setIsLiked] = React.useState("heart-outline");
+    const [likeBtnColor, setBtnColor] = React.useState("black");
+    function likeUnlike(){
+      if(isLiked=="heart-outline"){
+        setIsLiked("heart");
+        setBtnColor("red")
+      }
+      if(isLiked=="heart"){
+        setIsLiked("heart-outline");
+        setBtnColor("black")
+      }
+    }
     return(
         <div class="post">
           <div class="topo">
@@ -28,11 +42,20 @@ function Post(props){
           </div>
 
           <div class="conteudo">
-            <img src={props.postImage} />
+            <img src={props.postImage} onClick={likeUnlike} />
           </div>
 
           <div class="fundo">
-            <PostActions />
+            <div class="acoes">
+              <div>
+                <ion-icon name={isLiked} onClick={likeUnlike} style={{color: likeBtnColor}}></ion-icon>
+                <ion-icon name="chatbubble-outline"></ion-icon>
+                <ion-icon name="paper-plane-outline"></ion-icon>
+              </div>
+              <div>
+                <ion-icon name="bookmark-outline"></ion-icon>
+              </div>
+            </div>
 
             <div class="curtidas">
               <img src={props.firstLikeProfile} />
@@ -43,28 +66,4 @@ function Post(props){
           </div>
         </div>
     );
-}
-const INITIALVALUE="heart-outline"
-function PostActions(props){
-  const [isLiked, setIsLiked] = React.useState(INITIALVALUE);
-  function likeUnlike(){
-    if(isLiked=="heart-outline"){
-      setIsLiked("heart");
-    }
-    if(isLiked=="heart"){
-      setIsLiked("heart-outline");
-    }
-  }
-  return(
-  <div class="acoes">
-    <div>
-      <ion-icon name={isLiked} onClick={likeUnlike}></ion-icon>
-      <ion-icon name="chatbubble-outline"></ion-icon>
-      <ion-icon name="paper-plane-outline"></ion-icon>
-    </div>
-    <div>
-      <ion-icon name="bookmark-outline"></ion-icon>
-    </div>
-  </div>
-  );
 }
